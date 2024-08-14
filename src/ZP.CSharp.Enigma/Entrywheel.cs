@@ -41,13 +41,13 @@ namespace ZP.CSharp.Enigma
         <param name="data">The datum to map.</param>
         <returns>The mapped datum.</returns>
         */
-        public T FromPlugboard(T data) => Pairs.Where(p => p.Plugboard.Equals(data)).Single().Rotor;
+        public T FromPlugboard(T data) => Pairs.Where(p => data.Equals(p.Plugboard)).Single().Rotor;
 
         /**
         <summary>Maps a datum coming from the rotor.</summary>
         <param name="data">The datum to map.</param>
         <returns>The mapped datum.</returns>
         */
-        public T FromRotor(T data) => Pairs.Where(p => p.Rotor.Equals(data)).Single().Plugboard;
+        public T FromRotor(T data) => Pairs.Where(p => data.Equals(p.Rotor)).Single().Plugboard;
     }
 }

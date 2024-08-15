@@ -37,6 +37,21 @@ namespace ZP.CSharp.Enigma
         }
 
         /**
+        <summary>Creates an entrywheel with the plugboard-side and rotor-side mappings provided.</summary>
+        <param name="plugboard">The plugboard-side mapping provided.</param>
+        <param name="rotor">The rotor-side mapping provided.</param>
+        <returns>An entrywheel created with the mappings provided.</returns>
+        */
+        public Entrywheel(T[] plugboard, T[] rotor)
+        {
+            if (plugboard.Length != rotor.Length)
+            {
+                throw new ArgumentException("Unable to create pairs: Array lengths do not match.");
+            }
+            Pairs = plugboard.Zip(rotor).ToArray();
+        }
+
+        /**
         <summary>Maps a datum coming from the plugboard.</summary>
         <param name="data">The datum to map.</param>
         <returns>The mapped datum.</returns>

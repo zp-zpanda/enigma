@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using ZP.CSharp.Enigma;
@@ -34,6 +35,25 @@ namespace ZP.CSharp.Enigma
         public Reflector(params (T, T)[] pairs)
         {
             Pairs = pairs;
+        }
+
+        /**
+        <summary>Creates a reflector with the pairs-adjacent mapping provided.</summary>
+        <param name="map">The mapping provided.</param>
+        <returns>A reflector created with the mapping provided.</returns>
+        */
+        public Reflector(T[] map)
+        {
+            if (map.Length % 2 != 0)
+            {
+                throw new ArgumentException("Mapping has unpaired characters. Expected mapping: \"{pair1}{pair2}...\"");
+            }
+            var pairs = new List<(T, T)>();
+            for (var i = 0; i < map.Length / 2; i++)
+            {
+                pairs.Add((map[i * 2], map[i * 2 + 1]));
+            }
+            Pairs = pairs.ToArray();
         }
 
         /**

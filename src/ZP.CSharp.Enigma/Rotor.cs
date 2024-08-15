@@ -70,6 +70,24 @@ namespace ZP.CSharp.Enigma
         }
 
         /**
+        <summary>Creates a rotor with the position, notches, entrywheel-side, and reflector-side mappings provided.</summary>
+        <param name="pos">The position provided.</param>
+        <param name="notch">The notches provided.</param>
+        <param name="entrywheel">The entrywheel-side mapping provided.</param>
+        <param name="reflector">The reflector-side mapping provided.</param>
+        <returns>A rotor created with the position, notches, and mappings provided.</returns>
+        */
+        public Rotor(int pos, int[] notch, T[] entrywheel, T[] reflector)
+        {
+            if (entrywheel.Length != reflector.Length)
+            {
+                throw new ArgumentException("Unable to create pairs: Array lengths do not match.");
+            }
+            Position = pos;
+            Notch = notch;
+            Pairs = entrywheel.Zip(reflector).ToArray();
+        }
+        /**
         <summary>The domain of this rotor.</summary>
         <para>TODO: Allow domain other than entrywheel order</para>
         */

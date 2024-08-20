@@ -63,8 +63,15 @@ namespace ZP.CSharp.Enigma
         */
         public T Reflect(T data)
         {
-            var foundPair = Pairs.Where(p => new[]{p.Item1, p.Item2}.Contains(data)).Single();
-            return new[]{foundPair.Item1, foundPair.Item2}.Except(new[]{data}).Single();
+            try
+            {
+                var foundPair = Pairs.Where(p => new[]{p.Item1, p.Item2}.Contains(data)).Single();
+                return new[]{foundPair.Item1, foundPair.Item2}.Except(new[]{data}).Single();
+            }
+            catch (Exception ex)
+            {
+                throw new CharacterNotFoundException(ex);
+            }
         }
     }
 }

@@ -122,14 +122,34 @@ namespace ZP.CSharp.Enigma
         <param name="data">The datum to map.</param>
         <returns>The mapped datum.</returns>
         */
-        public T FromEntrywheel(T data) => ShiftOut(Pairs.Where(p => ShiftIn(data).Equals(p.Entrywheel)).Single().Reflector);
+        public T FromEntrywheel(T data)
+        {
+            try
+            {
+                return ShiftOut(Pairs.Where(p => ShiftIn(data).Equals(p.Entrywheel)).Single().Reflector);
+            }
+            catch (Exception ex)
+            {
+                throw new CharacterNotFoundException(ex);
+            }
+        }
 
         /**
         <summary>Maps a datum coming from the reflector.</summary>
         <param name="data">The datum to map.</param>
         <returns>The mapped datum.</returns>
         */
-        public T FromReflector(T data) => ShiftOut(Pairs.Where(p => ShiftIn(data).Equals(p.Reflector)).Single().Entrywheel);
+        public T FromReflector(T data)
+        {
+            try
+            {
+                return ShiftOut(Pairs.Where(p => ShiftIn(data).Equals(p.Reflector)).Single().Entrywheel);
+            }
+            catch (Exception ex)
+            {
+                throw new CharacterNotFoundException(ex);
+            }
+        }
 
         /**
         <summary>Determines whether the next rotor in line is allowed to step.</summary>

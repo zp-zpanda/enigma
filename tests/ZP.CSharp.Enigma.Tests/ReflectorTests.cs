@@ -19,7 +19,7 @@ namespace ZP.CSharp.Enigma.Tests
             {((char)byte.MinValue, (char)byte.MaxValue), (char.MinValue, char.MaxValue)}
         };
 
-        public static TheoryData<int[], (int, int)[]> CanMassConstructIntPairsData => new ()
+        public static TheoryData<int[], (int, int)[]> CanMassAddIntPairsData => new ()
         {
             {new[]{0, 1, 2, 3}, new[]{(0, 1), (2, 3)}},
             {
@@ -28,7 +28,7 @@ namespace ZP.CSharp.Enigma.Tests
             }
         };
 
-        public static TheoryData<char[], (char, char)[]> CanMassConstructCharPairsData => new ()
+        public static TheoryData<char[], (char, char)[]> CanMassAddCharPairsData => new ()
         {
             {new[]{'a', 'b', 'c', 'd'}, new[]{('a', 'b'), ('c', 'd')}},
             {
@@ -48,9 +48,9 @@ namespace ZP.CSharp.Enigma.Tests
         }
 
         [Theory]
-        [MemberData(nameof(CanMassConstructIntPairsData))]
-        [MemberData(nameof(CanMassConstructCharPairsData))]
-        public void CanMassConstructPairs<T>(T[] maps, (T, T)[] pairs)
+        [MemberData(nameof(CanMassAddIntPairsData))]
+        [MemberData(nameof(CanMassAddCharPairsData))]
+        public void CanMassAddPairs<T>(T[] maps, (T, T)[] pairs)
         {
             var reflector = new Reflector<T>(maps);
             Assert.All(reflector.Pairs, (p, idx) => Assert.Equal(p, pairs[idx]));

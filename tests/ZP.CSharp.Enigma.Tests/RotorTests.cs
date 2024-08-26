@@ -20,6 +20,35 @@ namespace ZP.CSharp.Enigma.Tests
             {(char.MinValue, char.MaxValue), (char.MaxValue, char.MinValue)}
         };
 
+        public static TheoryData<int[], int[], (int, int)[]> CanMassAddIntPairsData => new ()
+        {
+            {new[]{0, 1, 2, 3}, new[]{2, 3, 0, 1}, new[]{(0, 2), (1, 3), (2, 0), (3, 1)}},
+            {
+                new[]{(int)short.MinValue, (int)short.MaxValue, int.MinValue, int.MaxValue},
+                new[]{int.MinValue, int.MaxValue, (int)short.MinValue, (int)short.MaxValue},
+                new[]{
+                    ((int)short.MinValue, int.MinValue), ((int)short.MaxValue, int.MaxValue),
+                    (int.MinValue, (int)short.MinValue), (int.MaxValue, (int)short.MaxValue)
+                }
+            }
+        };
+
+        public static TheoryData<char[], char[], (char, char)[]> CanMassAddCharPairsData => new ()
+        {
+            {
+                new[]{'a', 'b', 'c', 'd'}, new[]{'c', 'd', 'a', 'b'},
+                new[]{('a', 'c'), ('b', 'd'), ('c', 'a'), ('d', 'b')}
+            },
+            {
+                new[]{(char)byte.MinValue, (char)byte.MaxValue, char.MinValue, char.MaxValue},
+                new[]{char.MinValue, char.MaxValue, (char)byte.MinValue, (char)byte.MaxValue},
+                new[]{
+                    ((char)byte.MinValue, char.MinValue), ((char)byte.MaxValue, char.MaxValue),
+                    (char.MinValue, (char)byte.MinValue), (char.MaxValue, (char)byte.MaxValue)
+                }
+            }
+        };
+
         [Theory]
         [MemberData(nameof(CanAddIntPairsData))]
         [MemberData(nameof(CanAddCharPairsData))]
@@ -30,12 +59,12 @@ namespace ZP.CSharp.Enigma.Tests
             Assert.Contains(pair2, rotor.Pairs);
         }
         [Theory]
-        [InlineData(new[]{0, 1, 2, 3}, new[]{2, 3, 0, 1}, new[]{0, 1, 2, 3}, new[]{2, 3, 0, 1})]
-        [InlineData(new[]{'a', 'b', 'c', 'd'}, new[]{'c', 'd', 'a', 'b'}, new[]{'a', 'b', 'c', 'd'}, new[]{'c', 'd', 'a', 'b'})]
-        public void CanMassConstructPairs<T>(T[] eArr, T[] rArr, T[] eExpected, T[] rExpected)
+        [MemberData(nameof(CanMassAddIntPairsData))]
+        [MemberData(nameof(CanMassAddCharPairsData))]
+        public void CanMassAddPairs<T>(T[] eArr, T[] rArr, (T, T)[] pairs)
         {
             var rotor = new Rotor<T>(0, new[]{0}, eArr, rArr);
-            Assert.All(rotor.Pairs, (p, idx) => Assert.Equal(p, (eExpected[idx], rExpected[idx])));
+            Assert.All(rotor.Pairs, (p, idx) => Assert.Equal(p, pairs[idx]));
         }
 
         [Theory]
@@ -78,6 +107,7 @@ namespace ZP.CSharp.Enigma.Tests
 
         [Theory]
         [InlineData(new[]{0, 1, 2, 3, 4}, new[]{4, 3, 2, 1, 0}, 0, new[]{4, 2, 0, 3, 1})]
+        [InlineData(new[]{'a', 'b', 'c', 'd', 'e'}, new[]{'e', 'd', 'c', 'b', 'a'}, 'a', new[]{'e', 'c', 'a', 'd', 'b'})]
         public void CanRotate<T>(T[] eArr, T[] rArr, T e, T[] rExpectedArr)
         {
             var rotor = new Rotor<T>(0, new[]{0}, eArr, rArr);

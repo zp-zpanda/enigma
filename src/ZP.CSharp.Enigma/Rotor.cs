@@ -87,6 +87,7 @@ namespace ZP.CSharp.Enigma
             Notch = notch;
             Pairs = entrywheel.Zip(reflector).ToArray();
         }
+
         /**
         <summary>The domain of this rotor.</summary>
         <para>TODO: Allow domain other than entrywheel order</para>

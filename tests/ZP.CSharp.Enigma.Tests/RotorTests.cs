@@ -58,6 +58,7 @@ namespace ZP.CSharp.Enigma.Tests
             Assert.Contains(pair1, rotor.Pairs);
             Assert.Contains(pair2, rotor.Pairs);
         }
+
         [Theory]
         [MemberData(nameof(CanMassAddIntPairsData))]
         [MemberData(nameof(CanMassAddCharPairsData))]

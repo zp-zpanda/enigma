@@ -1,0 +1,36 @@
+{
+    "metadata":
+    [{
+        "src":
+        [{
+            "src": "../",
+            "files":
+            [
+                "src/ZP.CSharp.Enigma/ZP.CSharp.Enigma.csproj",
+                "tests/ZP.CSharp.Enigma.Tests/ZP.CSharp.Enigma.Tests.csproj"
+            ]
+        }],
+        "dest": "api"
+    }],
+    "build":
+    {
+        "content":
+        [{
+            "files": ["api/*.yml"],
+            "exclude": ["out/**"]
+        }],
+        "resource":
+        [{
+            "files": ["images/**"]
+        }],
+        "output": "out",
+        "template": ["default", "modern"],
+        "globalMetadata":
+        {
+            "_appName": "ZP.CSharp.Enigma",
+            "_appTitle": "ZP.CSharp.Enigma",
+            "_enableSearch": true,
+            "pdf": true
+        }
+    }
+}
